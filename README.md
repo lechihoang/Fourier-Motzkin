@@ -2,13 +2,13 @@
 
 **Repo gốc:** [https://github.com/lechihoang/Fourier_Motzkin](https://github.com/lechihoang/Fourier_Motzkin)
 
-Dự án này cài đặt thuật toán Fourier-Motzkin để giải bài toán tối ưu tuyến tính với 2 và 3 biến.
+Repo này cài đặt thuật toán Fourier-Motzkin để giải bài toán tối ưu tuyến tính với 2 và 3 biến.
 
 ## Mô tả
 
 Thuật toán Fourier-Motzkin là một phương pháp khử biến để giải hệ bất phương trình tuyến tính. Thuật toán hoạt động bằng cách loại bỏ từng biến một cách có hệ thống để tìm ra nghiệm tối ưu.
 
-## Cấu trúc dự án
+## Cấu trúc 
 
 - `Fourier_motzkin_2.py`: Cài đặt thuật toán cho bài toán 2 biến (x, y)
 - `Fourier_motzkin_3.py`: Cài đặt thuật toán cho bài toán 3 biến (x, y, z)
@@ -87,11 +87,36 @@ Ví dụ:
 
 ## Thuật toán
 
-1. **Khử biến tuần tự**: Loại bỏ từng biến một cách có hệ thống
-2. **Chuẩn hóa hệ số**: Đưa hệ số của biến mục tiêu về 1 (max) hoặc -1 (min)
-3. **Kiểm tra tính khả thi**: Phát hiện các bất phương trình vô lý
-4. **Tìm nghiệm tối ưu**: Xác định giá trị tối ưu của biến mục tiêu
-5. **Tìm ngược nghiệm**: Xác định giá trị của các biến còn lại
+Quy trình giải bài toán tối ưu tuyến tính bằng phương pháp Fourier-Motzkin:
+
+1. **Nhập hệ bất phương trình**
+   - Nhập từng dòng bất phương trình theo đúng format.
+   - Xác định biến mục tiêu cần tối ưu (z hoặc t).
+
+2. **Khử biến tuần tự**
+   - Lần lượt loại bỏ các biến không phải biến mục tiêu (ví dụ: x, y).
+   - Ở mỗi bước, kết hợp các bất phương trình có hệ số dương và âm của biến đang khử để tạo ra hệ mới không còn biến đó.
+   - Giữ lại các bất phương trình không chứa biến đang khử.
+
+3. **Kiểm tra tính khả thi**
+   - Nếu xuất hiện bất phương trình dạng `0 <= b` với `b < 0` thì hệ vô nghiệm, dừng thuật toán.
+   - Loại bỏ các bất phương trình trùng lặp.
+
+4. **Chuẩn hóa hệ số biến mục tiêu**
+   - Đưa hệ số của biến mục tiêu về 1 (nếu tìm max) hoặc -1 (nếu tìm min) bằng cách chia cả hai vế cho hệ số đó.
+
+5. **Tìm miền giá trị của biến mục tiêu**
+   - Xác định các bất phương trình dạng `z <= b` (hoặc `t <= b`) và `-z <= b` (hoặc `-t <= b`).
+   - Tìm giá trị lớn nhất (min các upper bound) hoặc nhỏ nhất (max các lower bound) thỏa mãn tất cả các ràng buộc.
+   - Nếu không tồn tại miền giá trị hợp lệ, kết luận không có giá trị tối ưu.
+
+6. **Tìm ngược nghiệm các biến còn lại**
+   - Thay giá trị tối ưu của biến mục tiêu vào hệ bất phương trình trước đó để tìm miền giá trị của biến tiếp theo (ví dụ: tìm y, rồi x).
+   - Lặp lại cho đến khi xác định được giá trị của tất cả các biến.
+
+7. **Kết luận**
+   - Nếu tìm được bộ giá trị thỏa mãn tất cả các ràng buộc, in ra nghiệm tối ưu.
+   - Nếu ở bất kỳ bước nào miền giá trị rỗng, kết luận bài toán vô nghiệm.
 
 ## Xử lý lỗi
 

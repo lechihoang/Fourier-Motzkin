@@ -1,11 +1,9 @@
 import sys
 
-# In ra các bất phương trình theo định dạng của ma trận (4 biến: x, y, z, t)
 def print_matrix(ineqs):
     for ineq in ineqs:
         print("{:6.2f}x + {:6.2f}y + {:6.2f}z + {:6.2f}t <= {:6.2f}".format(ineq[0], ineq[1], ineq[2], ineq[3], ineq[4]))
 
-# Đưa hệ số của biến mục tiêu trong bất phương về 1 (hoặc -1 tùy bài toán)
 def normalize_objective(ineqs):
     result = []
     for ineq in ineqs:
@@ -18,12 +16,10 @@ def normalize_objective(ineqs):
             result.append(ineq)
     return result
 
-# Bỏ các bất phương trình trùng nhau
 def dedupe(ineqs):
     seen = set()
     return [x for x in ineqs if not (x in seen or seen.add(x))]
 
-# Bỏ qua không xét tiếp hoặc kết luận vô nghiệm cho các hàng có hệ số biến đều bằng 0
 def check_zero_row(ineqs):
     result = []
     for ineq in ineqs:
@@ -35,7 +31,6 @@ def check_zero_row(ineqs):
             result.append(ineq)
     return result
 
-# Loại các bất phương trình theo từng biến
 def eliminate(var_idx, ineqs):
     P = [ineq for ineq in ineqs if ineq[var_idx] > 0]
     N = [ineq for ineq in ineqs if ineq[var_idx] < 0]
