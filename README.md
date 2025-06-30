@@ -8,19 +8,21 @@ Thuật toán Fourier-Motzkin là một phương pháp khử biến để giải
 
 ## Cấu trúc dự án
 
-- `Fourier_motzkin_2.py`: Cài đặt thuật toán cho bài toán 3 biến (x, y, z)
-- `Fourier_motzkin_3.py`: Cài đặt thuật toán cho bài toán 4 biến (x, y, z, t)
+- `Fourier_motzkin_2.py`: Cài đặt thuật toán cho bài toán 2 biến (x, y)
+- `Fourier_motzkin_3.py`: Cài đặt thuật toán cho bài toán 3 biến (x, y, z)
 - `input1.txt`, `input2.txt`: Các file dữ liệu đầu vào mẫu
 
 ## Tính năng chính
 
-### Fourier_motzkin_2.py (3 biến)
+### Fourier_motzkin_2.py (2 biến)
+- Sử dụng thêm biến mục tiêu z 
 - Giải bài toán tối ưu với format: `ax + by + cz <= d`
 - Hỗ trợ tìm giá trị lớn nhất (max) hoặc nhỏ nhất (min) của biến z
 - Khử lần lượt biến x, y để tìm giá trị tối ưu của z
 - Tìm ngược các giá trị tối ưu của y, x
 
-### Fourier_motzkin_3.py (4 biến)  
+### Fourier_motzkin_3.py (3 biến)  
+- Sử dụng thêm biến mục tiêu t
 - Giải bài toán tối ưu với format: `ax + by + cz + dt <= e`
 - Hỗ trợ tìm giá trị lớn nhất (max) hoặc nhỏ nhất (min) của biến t
 - Khử lần lượt biến x, y, z để tìm giá trị tối ưu của t
@@ -40,19 +42,19 @@ Bạn có thể nhập dữ liệu theo 2 cách:
    python3 Fourier_motzkin_3.py < input4.txt
    ```
 
-### Chạy chương trình 3 biến:
+### Chạy chương trình 2 biến:
 ```bash
 python3 Fourier_motzkin_2.py
 ```
 
-### Chạy chương trình 4 biến:
+### Chạy chương trình 3 biến:
 ```bash
 python3 Fourier_motzkin_3.py
 ```
 
 ## Định dạng đầu vào
 
-### Cho 3 biến (x, y, z):
+### Cho 2 biến (x, y):
 Nhập từng bất phương trình trên một dòng theo format: `a b c d`
 Tương ứng với: `ax + by + cz <= d`
 
@@ -61,11 +63,12 @@ Ví dụ:
 1 2 3 6
 2 -1 1 4
 -1 1 2 3
+(Kết thúc bằng một dòng trống)
 
+(Điền max \ min tùy theo yêu cầu tìm gía trị lớn nhất \ nhỏ nhất của hàm mục tiêu)
 ```
-(Kết thúc bằng dòng trống)
 
-### Cho 4 biến (x, y, z, t):
+### Cho 3 biến (x, y, z):
 Nhập từng bất phương trình trên một dòng theo format: `a b c d e`
 Tương ứng với: `ax + by + cz + dt <= e`
 
@@ -74,9 +77,11 @@ Ví dụ:
 1 2 3 1 10
 2 -1 1 2 8
 -1 1 2 -1 5
+(Kết thúc bằng một dòng trống)
 
+(Điền max \ min tùy theo yêu cầu tìm gía trị lớn nhất \ nhỏ nhất của hàm mục tiêu)
 ```
-(Kết thúc bằng dòng trống)
+
 
 ## Thuật toán
 
@@ -89,12 +94,11 @@ Ví dụ:
 ## Xử lý lỗi
 
 - Phát hiện bài toán vô nghiệm
-- Phát hiện bài toán không có giá trị tối ưu (vô hạn)
+- Phát hiện bài toán không có giá trị tối ưu 
 - Loại bỏ các bất phương trình trùng lặp
 - Xử lý các bất phương trình có hệ số biến bằng 0
 
 ## Ghi chú
 
-- Chỉ dành cho mục đích tham khảo và học tập
-- Không sao chép cho mục đích thương mại
+- Chỉ dành cho mục đích tham khảo và học tập, không sao chép dưới bất kì hình thức nào
 - Code được viết với mục đích minh họa thuật toán
