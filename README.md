@@ -1,5 +1,7 @@
 # Thuật toán Fourier-Motzkin
 
+**Repo gốc:** [https://github.com/lechihoang/Fourier_Motzkin](https://github.com/lechihoang/Fourier_Motzkin)
+
 Dự án này cài đặt thuật toán Fourier-Motzkin để giải bài toán tối ưu tuyến tính với 2 và 3 biến.
 
 ## Mô tả
@@ -100,5 +102,5 @@ Ví dụ:
 
 ## Ghi chú
 
-- Chỉ dành cho mục đích tham khảo và học tập, không sao chép dưới bất kì hình thức nào
 - Code được viết với mục đích minh họa thuật toán
+- Chỉ dành cho mục đích tham khảo và học tập, không sao chép dưới bất kì hình thức nào
