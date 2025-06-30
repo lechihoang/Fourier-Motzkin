@@ -28,6 +28,18 @@ Thuật toán Fourier-Motzkin là một phương pháp khử biến để giải
 
 ## Cách sử dụng
 
+### Nhập dữ liệu
+
+Bạn có thể nhập dữ liệu theo 2 cách:
+
+1. **Nhập thủ công**: Chạy chương trình và nhập từng dòng bất phương trình theo hướng dẫn trên màn hình. Kết thúc bằng một dòng trống.
+2. **Đọc từ file input.txt**: Sử dụng file đầu vào (ví dụ: input1.txt, input2.txt, ...) theo đúng format, sau đó chạy chương trình với lệnh redirect:
+   
+   ```bash
+   python3 Fourier_motzkin_2.py < input1.txt
+   python3 Fourier_motzkin_3.py < input4.txt
+   ```
+
 ### Chạy chương trình 3 biến:
 ```bash
 python3 Fourier_motzkin_2.py
