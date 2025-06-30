@@ -1,6 +1,0 @@
-restart;
-with(SolveTools);
-ineqs := {0 <= x, 0 <= y, x <= 60, y <= 75, z <= 30*x + 20*y, 10*x + 8*y <= 800};
-res := SolveTools:-SemiAlgebraic(ineqs, {x, y}, parameters = [z]);
-
-
