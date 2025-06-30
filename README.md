@@ -1,6 +1,6 @@
 # Thuật toán Fourier-Motzkin
 
-🔗 **[Source code trên GitHub](https://github.com/lechihoang/Ruler-Divide-Visualization)**
+🔗 **[Source code trên GitHub](https://github.com/lechihoang/Fourier-Motzkin)**
 
 Repo này cài đặt thuật toán Fourier-Motzkin để giải bài toán tối ưu tuyến tính với 2 và 3 biến.
 
