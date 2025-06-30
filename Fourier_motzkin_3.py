@@ -1,33 +1,29 @@
 import sys
 
+# In ra các bất phương trình theo định dạng của ma trận (4 biến: x, y, z, t)
 def print_matrix(ineqs):
     for ineq in ineqs:
         print("{:6.2f}x + {:6.2f}y + {:6.2f}z + {:6.2f}t <= {:6.2f}".format(ineq[0], ineq[1], ineq[2], ineq[3], ineq[4]))
 
-def normalize_objective(ineqs, sense):
+# Đưa hệ số của biến mục tiêu trong bất phương về 1 (hoặc -1 tùy bài toán)
+def normalize_objective(ineqs):
     result = []
     for ineq in ineqs:
         a4 = ineq[3]
-        if sense == 'max':
-            if a4 > 0:
-                result.append(tuple(x / a4 for x in ineq))
-            elif a4 < 0:
-                result.append(tuple(-x / abs(a4) for x in ineq))
-            else:
-                result.append(ineq)
+        if a4 > 0:
+            result.append(tuple(x / a4 for x in ineq))
+        elif a4 < 0:
+            result.append(tuple(-x / abs(a4) for x in ineq))
         else:
-            if a4 > 0:
-                result.append(tuple(-x / abs(a4) for x in ineq))
-            elif a4 < 0:
-                result.append(tuple(x / a4 for x in ineq))
-            else:
-                result.append(ineq)
+            result.append(ineq)
     return result
 
+# Bỏ các bất phương trình trùng nhau
 def dedupe(ineqs):
     seen = set()
     return [x for x in ineqs if not (x in seen or seen.add(x))]
 
+# Bỏ qua không xét tiếp hoặc kết luận vô nghiệm cho các hàng có hệ số biến đều bằng 0
 def check_zero_row(ineqs):
     result = []
     for ineq in ineqs:
@@ -39,6 +35,7 @@ def check_zero_row(ineqs):
             result.append(ineq)
     return result
 
+# Loại các bất phương trình theo từng biến
 def eliminate(var_idx, ineqs):
     P = [ineq for ineq in ineqs if ineq[var_idx] > 0]
     N = [ineq for ineq in ineqs if ineq[var_idx] < 0]
@@ -69,34 +66,19 @@ def fourier_motzkin_3var(constraints, sense):
     print("Sau khi khử z, có các bất phương trình như sau: ")
     print_matrix(m3)
 
-    m4 = normalize_objective(matrices[2], sense)
+    m4 = normalize_objective(matrices[2])
     m4 = check_zero_row(m4)
     matrices.append(m4)
     t_coef = 1 if sense == 'max' else -1
     print(f"Đưa hệ số của t về {t_coef}, ta được: ")
     print_matrix(m4)
 
-    upper_bounds = [ineq[4] for ineq in m4 if ineq[3] > 0]
-    lower_bounds = [ineq[4] for ineq in m4 if ineq[3] < 0]
-    
-    t_max = min(upper_bounds) if upper_bounds else float('inf')
-    t_min = max([-b for b in lower_bounds]) if lower_bounds else float('-inf')
-
-    if t_min > t_max:
+    bounds = [ineq[4] for ineq in m4 if ineq[3] > 0]
+    if not bounds:
         print("Không tìm ra giá trị tối ưu thỏa mãn")
         exit()
-    if sense == 'max':
-        if t_max == float('inf'):
-            print("Không tìm ra giá trị tối ưu thỏa mãn")
-            exit()
-        t_opt = t_max
-    else:
-        if t_min == float('-inf'):
-            print("Không tìm ra giá trị tối ưu thỏa mãn")
-            exit()
-        t_opt = t_min
-    return t_opt, matrices
-
+    return (min(bounds) if sense == 'max' else max(bounds)), matrices
+ 
 def find_bounds(matrix, known_indices, known_values, target_idx):
     new_ineqs = []
 
@@ -117,7 +99,7 @@ def find_bounds(matrix, known_indices, known_values, target_idx):
             new_ineqs.append(tuple(new_coeffs + [b]))
 
     upper = [ineq[4] for ineq in new_ineqs if ineq[target_idx] > 0]
-    lower = [ineq[4] for ineq in new_ineqs if ineq[target_idx] < 0]
+    lower = [-ineq[4] for ineq in new_ineqs if ineq[target_idx] < 0]
 
     var_max = min(upper) if upper else float('inf')
     var_min = max(lower) if lower else float('-inf')
@@ -144,13 +126,13 @@ if __name__ == '__main__':
     print(f"Giá trị cực trị t = {t_optimal:.4f}")
 
     print("Thay giá trị của t vào các bất phương trình sau khi khử x, y ta được: ")
-    z_min, z_max = find_bounds(matrices[0], [3], [t_optimal], 2)
+    z_min, z_max = find_bounds(matrices[1], [3], [t_optimal], 2)
     if z_min > z_max:
         print("Bài toán vô nghiệm ở biến z!")
         exit()
 
     print("Thay giá trị của z, t vào các bất phương trình sau khi khử x ta được: ")
-    y_min, y_max = find_bounds(matrix, [2,3], [z_max, t_optimal], 1)
+    y_min, y_max = find_bounds(matrices[0], [2,3], [z_max, t_optimal], 1)
     if y_min > y_max:
         print("Bài toán vô nghiệm ở biến y!")
         exit()
